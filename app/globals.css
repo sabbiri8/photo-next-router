@@ -1,26 +1,149 @@
-@import "tailwindcss";
-
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
+@import 'tailwindcss';
+@layer base {
+  /* Define font families as CSS variables for easier management */
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --font-inter: 'Inter', sans-serif;
+    --font-roboto: 'Roboto', sans-serif;
+    --font-poppins: 'Poppins', sans-serif;
+  }
+
+  html,
+  body {
+    font-family: var(--font-inter); /* Apply Inter font globally */
+  }
+
+  body {
+    font-family: var(--font-roboto); /* Override for body */
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-poppins); /* Override for headings */
+  }
+
+  /* Basic resets (from original Tailwind preflight, simplified for example) */
+  *,
+  ::before,
+  ::after {
+    box-sizing: border-box;
+    border-width: 0;
+    border-style: solid;
+    border-color: #e5e7eb;
+    --tw-content: '';
+  }
+
+  html,
+  :host {
+    line-height: 1.5;
+    -webkit-text-size-adjust: 100%;
+    -moz-tab-size: 4;
+    tab-size: 4;
+    font-feature-settings: normal;
+    font-variation-settings: normal;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    margin: 0;
+    line-height: inherit;
+  }
+
+  img,
+  svg,
+  video,
+  canvas,
+  audio,
+  iframe,
+  embed,
+  object {
+    display: block;
+    vertical-align: middle;
+  }
+
+  img,
+  video {
+    max-width: 100%;
+    height: auto;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer components {
+  /* Custom CSS for the image grid and title overlay, treated as components */
+  .img-grid {
+    columns: 1;
+    gap: 1rem;
+  }
+
+  @media (min-width: 640px) {
+    .img-grid {
+      columns: 2;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .img-grid {
+      columns: 3;
+    }
+  }
+
+  @media (min-width: 1280px) {
+    .img-grid {
+      columns: 4;
+    }
+  }
+
+  .img-grid > a:not(:first-child) {
+    margin-top: 1rem;
+  }
+
+  .img-grid > a {
+    position: relative;
+    display: block;
+    cursor: pointer;
+    overflow: hidden;
+    border-radius: 0.5rem;
+  }
+
+  .title-container {
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    text-align: center;
+    opacity: 0;
+    transition-property: all;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 500ms;
+  }
+
+  .group:hover .title-container {
+    opacity: 1;
+  }
+
+  .title {
+    font-size: 1rem;
+    line-height: 1.5rem;
+    font-weight: 600;
+    color: rgb(255, 255, 255);
+  }
+
+  @media (min-width: 1024px) {
+    .title {
+      font-size: 1.125rem;
+      line-height: 1.75rem;
+    }
+  }
+
+  /* Ensure images within the grid take full width of their column */
+  .img-grid img {
+    width: 100%;
+    height: auto;
+    display: block; /* Important for column layout */
+  }
 }
